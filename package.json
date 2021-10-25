@@ -1,0 +1,20 @@
+{
+  "name": "range-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "deploy": "npm run build && ipfs add -r dist"
+  },
+  "license": "GPLv3",
+  "devDependencies": {
+    "parcel": "^2.0.0"
+  },
+  "dependencies": {
+    "@web3-react/core": "^6.1.9",
+    "ethers": "^5.5.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.3"
+  }
+}
