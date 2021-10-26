@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
 import ABI from '../abi/pool_abi.json'
 
-export function useLiquidity(poolAddress, token, amount) {
+export function useLiquidity(poolAddress) {
     const { library } = useWeb3React()
 
     const [liquidity, setLiquidity] = useState(null)
@@ -19,10 +19,16 @@ export function useLiquidity(poolAddress, token, amount) {
             library
         )
         const signer = contract.connect(library.getSigner());
-        const gasLimit = await signer.estimateGas.add(token, amount)
+
         setLiquidity({
-            add: () => signer.add(token, amount, { gasLimit }),
-            remove: () => signer.remove(token, amount, { gasLimit })
+            add: async (token, amount) => {
+                const gasLimit = await signer.estimateGas.add(token, amount)
+                signer.add(token, amount, { gasLimit })
+            },
+            remove: async (token, amount) => {
+                const gasLimit = await signer.estimateGas.add(token, amount)
+                signer.remove(token, amount, { gasLimit })
+            }
         })
     }, [library])
 
